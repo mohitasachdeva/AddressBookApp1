@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 
-public class AddressBookService {
+  public class AddressBookService implements AddressBookInterface {
     @Autowired
     IRepo iRepo;
     public AddressBookModel userAdd(AddressBookDto addressBookDto){
@@ -37,7 +37,7 @@ public class AddressBookService {
         iRepo.save(addressBookModel1.get());
         return addressBookModel1.get();
     }
-    public void deleteByid(int id){
+    public void deleteById(int id){
 iRepo.deleteById(id);
     }
 
