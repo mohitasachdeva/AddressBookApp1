@@ -1,5 +1,6 @@
 package com.example.addressbook.controller;
 
+import com.example.addressbook.dto.AddressBookDto;
 import com.example.addressbook.model.AddressBookModel;
 import com.example.addressbook.services.AddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class AddressBookController {
 
 
     @PostMapping("/newUser")
-    public AddressBookModel userAdd(@RequestBody AddressBookModel addressBookModel) {
-        return addressBookService.userAdd(addressBookModel);
+    public AddressBookModel userAdd(@RequestBody AddressBookDto addressBookDto) {
+        return addressBookService.userAdd(addressBookDto);
 
     }
     @GetMapping("/all")
@@ -29,11 +30,11 @@ public class AddressBookController {
         return addressBookService.getById(id);
     }
     @PutMapping("/update/{id}")
-    public  AddressBookModel updating(@PathVariable int id , @RequestBody AddressBookModel addressBookModel){
-       return addressBookService.update(addressBookModel,id);
+    public  AddressBookModel updating(@PathVariable int id , @RequestBody AddressBookDto addressBookDto){
+       return addressBookService.update(addressBookDto,id);
     }
-   @DeleteMapping("/del")
-    public void delete(int id){
+   @DeleteMapping("/del/{id}")
+    public void delete(@PathVariable int id){
         addressBookService.deleteByid(id);
    }
 }
