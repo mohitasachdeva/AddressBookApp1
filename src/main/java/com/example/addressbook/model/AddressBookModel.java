@@ -1,8 +1,11 @@
 package com.example.addressbook.model;
 
+import com.example.addressbook.dto.AddressBookDto;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+@Entity
 public class AddressBookModel {
     @Id
     @GeneratedValue
@@ -13,12 +16,12 @@ public class AddressBookModel {
     private String email;
     private long phoneNumber;
 
-    public AddressBookModel(String fName, String lName, String email, long phoneNumber,int id) {
-        this.id = id;
-        this.fName = fName;
-        this.lName = lName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+    public AddressBookModel(AddressBookDto addressBookDto) {//saving
+
+        this.fName = addressBookDto.fName;
+        this.lName = addressBookDto.lName;
+        this.email = addressBookDto.email;
+        this.phoneNumber = addressBookDto.phoneNumber;
     }
 
 
@@ -64,5 +67,13 @@ public class AddressBookModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public AddressBookModel(AddressBookDto addressBookDto , int id) {//updating
+        this.id=id;
+        this.fName = addressBookDto.fName;
+        this.lName = addressBookDto.lName;
+        this.email = addressBookDto.email;
+        this.phoneNumber = addressBookDto.phoneNumber;
     }
 }
