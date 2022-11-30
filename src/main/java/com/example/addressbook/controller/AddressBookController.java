@@ -1,24 +1,39 @@
 package com.example.addressbook.controller;
 
+import com.example.addressbook.model.AddressBookModel;
+import com.example.addressbook.services.AddressBookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class AddressBookController {
+    @Autowired
+    AddressBookService addressBookService;
 
-    //uc1
+    //uc2
 
-   @GetMapping("/get")
-    public String display(){
-       return " Creating new Address Book";
-   }
-   @PostMapping("/newUser")
-    public String userAdd(@RequestBody String fName,String lName , String phoneNumber , String email){
-       return "userData"+ fName +" "+lName+" "+phoneNumber
-               +" "+email;
-   }
-   @PutMapping("/update/{fName}")
-    public  String update(@PathVariable String fName , @RequestBody String lName , String email , String phoneNumber ){
-       return "updating user data"+ fName+" "+lName+" "+email+" "+phoneNumber;
 
+    @PostMapping("/newUser")
+    public AddressBookModel userAdd(@RequestBody AddressBookModel addressBookModel) {
+        return addressBookService.userAdd(addressBookModel);
+
+    }
+    @GetMapping("/all")
+    public List<AddressBookModel> greetingModelsFindAll() {
+        return addressBookService.getAll();
+    }
+    @GetMapping("/getting/{id}")
+    public AddressBookModel getting( @PathVariable int id){
+        return addressBookService.getById(id);
+    }
+    @PutMapping("/update/{id}")
+    public  AddressBookModel updating(@PathVariable int id , @RequestBody AddressBookModel addressBookModel){
+       return addressBookService.update(addressBookModel,id);
+    }
+   @DeleteMapping("/del")
+    public void delete(int id){
+        addressBookService.deleteByid(id);
    }
 }
