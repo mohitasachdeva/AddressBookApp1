@@ -6,20 +6,24 @@ import com.example.addressbook.repository.IRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 
   public class AddressBookService implements AddressBookInterface {
+    List<AddressBookModel>addressBookModels = new ArrayList();
     @Autowired
     IRepo iRepo;
     public AddressBookModel userAdd(AddressBookDto addressBookDto){
         AddressBookModel addressBookModel = new AddressBookModel(addressBookDto);
+        addressBookModels.add(addressBookModel);
         return iRepo.save(addressBookModel);
     }
     public List<AddressBookModel> getAll(){
        List<AddressBookModel>addressBookModels =iRepo.findAll();
+
        return addressBookModels;
     }
     public AddressBookModel getById(int id){
@@ -32,13 +36,14 @@ import java.util.Optional;
         addressBookModel1 = iRepo.findById(id);
         addressBookModel1.get().setfName(addressBookModel.getfName());
         addressBookModel1.get().setlName(addressBookModel.getlName());
-    addressBookModel1.get().setEmail(addressBookModel.getEmail());
+        addressBookModel1.get().setEmail(addressBookModel.getEmail());
         addressBookModel1.get().setPhoneNumber(addressBookModel.getPhoneNumber());
+        addressBookModels.add(addressBookModel);
         iRepo.save(addressBookModel1.get());
         return addressBookModel1.get();
     }
     public void deleteById(int id){
-iRepo.deleteById(id);
+    iRepo.deleteById(id);
     }
 
 }
