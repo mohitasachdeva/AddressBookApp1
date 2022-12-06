@@ -1,10 +1,13 @@
 package com.example.addressbook.controller;
 
 import com.example.addressbook.dto.AddressBookDto;
+import com.example.addressbook.dto.ResponseDto;
 import com.example.addressbook.model.AddressBookModel;
 import com.example.addressbook.services.AddressBookInterface;
 import com.example.addressbook.services.AddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +21,10 @@ public class AddressBookController {
 
 
     @PostMapping("/newUser")
-    public AddressBookModel userAdd(@RequestBody AddressBookDto addressBookDto) {
-        return addressBookInterface.userAdd(addressBookDto);
+    public ResponseEntity<ResponseDto> userAdd(@RequestBody AddressBookDto addressBookDto) {
+        ResponseDto responseDto = new ResponseDto("New Employee Added", addressBookDto);
+        ResponseEntity<ResponseDto> response = new ResponseEntity(responseDto, HttpStatus.OK);
+        return response;
 
     }
     @GetMapping("/all")
