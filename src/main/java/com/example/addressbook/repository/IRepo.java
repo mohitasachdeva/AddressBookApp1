@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface IRepo extends JpaRepository <AddressBookModel,Integer> {
+public interface IRepo extends JpaRepository <AddressBookModel,Integer>
+{
+
 }

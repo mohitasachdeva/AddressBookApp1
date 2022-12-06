@@ -18,6 +18,9 @@ public  class AddressBookModel {
     private String lName;
     private String email;
     private long phoneNumber;
+    private String city;
+    private String state;
+    private Long zipcode;
 
     public AddressBookModel(AddressBookDto addressBookDto) {//saving
 
@@ -25,6 +28,9 @@ public  class AddressBookModel {
         this.lName = addressBookDto.lName;
         this.email = addressBookDto.email;
         this.phoneNumber = addressBookDto.phoneNumber;
+        this.city=addressBookDto.city;
+        this.state=addressBookDto.state;
+        this.zipcode=addressBookDto.zipcode;
     }
 
 
@@ -40,5 +46,8 @@ public  class AddressBookModel {
         this.lName = addressBookDto.lName;
         this.email = addressBookDto.email;
         this.phoneNumber = addressBookDto.phoneNumber;
+        this.city=addressBookDto.city;
+        this.state=addressBookDto.state;
+        this.zipcode=addressBookDto.zipcode;
     }
 }
