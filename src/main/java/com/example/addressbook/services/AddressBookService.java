@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 
@@ -31,19 +31,19 @@ import java.util.Optional;
         return  addressBookModel;
     }
     public AddressBookModel update(AddressBookDto addressBookDto ,int id){
-        AddressBookModel addressBookModel = new AddressBookModel((addressBookDto));
-        Optional<AddressBookModel> addressBookModel1;
-        addressBookModel1 = iRepo.findById(id);
-        addressBookModel1.get().setfName(addressBookModel.getfName());
-        addressBookModel1.get().setlName(addressBookModel.getlName());
-        addressBookModel1.get().setEmail(addressBookModel.getEmail());
-        addressBookModel1.get().setPhoneNumber(addressBookModel.getPhoneNumber());
-        addressBookModels.add(addressBookModel);
-        iRepo.save(addressBookModel1.get());
-        return addressBookModel1.get();
+        if(iRepo.findById(id).isPresent()){
+            AddressBookModel newAdd = new AddressBookModel( addressBookDto,id);
+            AddressBookModel search =iRepo.save(newAdd);
+            return search;
+        }
+        else{
+            return null;
+        }
     }
-    public void deleteById(int id){
-    iRepo.deleteById(id);
+    public void deleteById(int id)
+    {
+
+        iRepo.deleteById(id);
     }
 
 }
