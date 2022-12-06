@@ -2,9 +2,11 @@ package com.example.addressbook.controller;
 
 import com.example.addressbook.dto.AddressBookDto;
 import com.example.addressbook.dto.ResponseDto;
+import com.example.addressbook.exception.AddressBookException;
 import com.example.addressbook.model.AddressBookModel;
 import com.example.addressbook.services.AddressBookInterface;
-import com.example.addressbook.services.AddressBookService;
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +19,19 @@ public class AddressBookController {
     @Autowired
     AddressBookInterface addressBookInterface;
 
-    //uc2
+
 
 
     @PostMapping("/newUser")
-    public ResponseEntity<ResponseDto> userAdd(@RequestBody AddressBookDto addressBookDto) {
-        ResponseDto responseDto = new ResponseDto("New Employee Added", addressBookDto);
+    public ResponseEntity<ResponseDto> userAdd( @Valid @RequestBody AddressBookDto addressBookDto)  {
+        AddressBookModel addressBookModel = addressBookInterface.userAdd(addressBookDto);
+        ResponseDto responseDto = new ResponseDto("New user Added", addressBookModel);
         ResponseEntity<ResponseDto> response = new ResponseEntity(responseDto, HttpStatus.OK);
         return response;
 
     }
     @GetMapping("/all")
-    public List<AddressBookModel> greetingModelsFindAll() {
+    public List<AddressBookModel> greetingModelsFindAll() throws AddressBookException {
         return addressBookInterface.getAll();
     }
     @GetMapping("/getting/{id}")
@@ -36,7 +39,7 @@ public class AddressBookController {
         return addressBookInterface.getById(id);
     }
     @PutMapping("/update/{id}")
-    public  AddressBookModel updating(@PathVariable int id , @RequestBody AddressBookDto addressBookDto){
+    public  AddressBookModel updating(@PathVariable int id , @RequestBody AddressBookDto addressBookDto)throws AddressBookException{
        return addressBookInterface.update(addressBookDto,id);
     }
    @DeleteMapping("/del/{id}")
