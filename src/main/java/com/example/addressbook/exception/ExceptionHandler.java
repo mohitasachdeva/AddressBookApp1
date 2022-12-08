@@ -20,14 +20,14 @@ public class ExceptionHandler {
         List<ObjectError> errorList = exception.getBindingResult().getAllErrors();
         List<String> errMsg = errorList.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
 
-        ResponseDto responseDTO = new ResponseDto("Exception While processing  REST  Request",errMsg);
+        ResponseDto responseDTO = new ResponseDto("Exception While processing  REST  Request",errMsg,toString());
         return new ResponseEntity<ResponseDto>(responseDTO, HttpStatus.BAD_REQUEST);
     }
     @org.springframework.web.bind.annotation.ExceptionHandler(AddressBookException.class)
     public ResponseEntity<ResponseDto> handleEmployeePayrollException(AddressBookException exception)
     {
 
-        ResponseDto responseDTO = new ResponseDto("Exception While processing REST Request",exception.getMessage());
+        ResponseDto responseDTO = new ResponseDto("Exception While processing REST Request",exception.getMessage(),toString());
         return new ResponseEntity<ResponseDto>(responseDTO, HttpStatus.BAD_REQUEST);
     }
 }
