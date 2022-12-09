@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface IRepo extends JpaRepository <AddressBookModel,Integer>
 {
-//    @Query(value = "select * from address_book_model where city = :city ",nativeQuery = true)
-//    List<String> findUserByCity(String department);
+    @Query(value = "select * from address_book_model where city= :city ", nativeQuery = true)
+    List<String> findByCity(String city);
 
 }
 

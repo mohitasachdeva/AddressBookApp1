@@ -7,7 +7,6 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.auth0.jwt.interfaces.Verification;
-import com.example.addressbook.model.AddressBookModel;
 import org.springframework.stereotype.Component;
 
 @Component
