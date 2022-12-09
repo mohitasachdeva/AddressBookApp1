@@ -14,5 +14,7 @@ public interface AddressBookInterface {
     AddressBookModel deleteById(int id);
 
     AddressBookModel getById(int id);
-//    List<String> findUserByCity( String city);
+    public List<String> findByCity(String city);
+    AddressBookModel getByToken(String token);
+    AddressBookModel updateByToken( int id ,String token,AddressBookDto addressBookDto );
 }
