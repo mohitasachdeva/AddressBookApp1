@@ -4,7 +4,9 @@ import com.example.addressbook.dto.AddressBookDto;
 import com.example.addressbook.dto.ResponseDto;
 import com.example.addressbook.exception.AddressBookException;
 import com.example.addressbook.model.AddressBookModel;
+import com.example.addressbook.model.Email;
 import com.example.addressbook.services.AddressBookInterface;
+import com.example.addressbook.services.EmailServiceInterface;
 import com.example.addressbook.util.Token;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,8 @@ public class AddressBookController {
     AddressBookInterface addressBookInterface;
     @Autowired
     Token token;
+    @Autowired
+    EmailServiceInterface emailServiceInterface;
 
 
 
@@ -30,6 +34,8 @@ public class AddressBookController {
 
         AddressBookModel addressBookModel = addressBookInterface.userAdd(addressBookDto);
         String idToken= token.createToken(addressBookModel.id);
+        Email email1=new Email(addressBookModel.getEmail(),"user is registered",addressBookModel.getFName());
+       emailServiceInterface.sendMail(email1);
         ResponseDto responseDto = new ResponseDto("New user Added", addressBookModel,idToken);
         ResponseEntity<ResponseDto> response = new ResponseEntity(responseDto, HttpStatus.OK);
 
@@ -86,6 +92,13 @@ public class AddressBookController {
     public ResponseEntity<ResponseDto> updating(@PathVariable int id, @RequestParam String token, @RequestBody AddressBookDto addressBookDto)throws AddressBookException{
         AddressBookModel addressBookModel = addressBookInterface.updateByToken( id, token,addressBookDto);
         ResponseDto responseDto = new ResponseDto("updated user", addressBookModel, token);
+        ResponseEntity<ResponseDto>response=new ResponseEntity<>(responseDto,HttpStatus.OK);
+        return response;
+    }
+    @DeleteMapping("/delByToken/{token}")
+    public ResponseEntity<ResponseDto> delete(@PathVariable String token){
+        AddressBookModel addressBookModel = addressBookInterface.deleteByToken(token);
+        ResponseDto responseDto = new ResponseDto("get by token and delete user ", addressBookModel,token);
         ResponseEntity<ResponseDto>response=new ResponseEntity<>(responseDto,HttpStatus.OK);
         return response;
     }

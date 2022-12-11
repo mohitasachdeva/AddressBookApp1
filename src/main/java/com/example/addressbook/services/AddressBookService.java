@@ -74,29 +74,26 @@ import java.util.Optional;
 
     @Override
     public AddressBookModel updateByToken( int id,String token,AddressBookDto addressBookDto) {
-
-//        AddressBookModel addressBookModel = new AddressBookModel(addressBookDto);
-//        addressBookModel=this.getByToken(token);
-//        if(addressBookModel.equals(addressBookModel)){
-//            AddressBookModel save = iRepo.save(addressBookModel);
-//            return save;
-//        }
-//        else {
-//            throw new AddressBookException("token not matched");
-//        }
         int userId =token1.decodeToken(token);
         Optional<AddressBookModel>addressBookModel=iRepo.findById(userId)  ;
         if(addressBookModel.isPresent())
         {
-           AddressBookModel addressBookModel1 = new AddressBookModel(addressBookDto);
-           addressBookModel1.setId(id);
-           AddressBookModel addressBookModel2=iRepo.save(addressBookModel1);
-           return addressBookModel2;
+        AddressBookModel addressBookModel1 = new AddressBookModel(addressBookDto);
+        addressBookModel1.setId(id);
+        AddressBookModel addressBookModel2=iRepo.save(addressBookModel1);
+        return addressBookModel2;
 
-        }
+    }
         else {
-            throw new AddressBookException("token never matched");
-        }
+        throw new AddressBookException("token never matched");
+    }
+}
+    public AddressBookModel deleteByToken(String token) {
+        int userId =token1.decodeToken(token);
+
+        iRepo.deleteById(userId);
+
+        return null;
     }
     }
 
